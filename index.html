@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nim Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <style>
       body {
         background-color: #f0f0f0;
@@ -151,6 +152,7 @@
         color: #28a745;
         font-size: 1.5rem;
       }
+
     </style>
   </head>
   <body>
@@ -374,7 +376,13 @@
         if (gameState.gameOver) {
           const winner = gameState.computerMove ? "Human" : "Computer";
           spanElement.className = "winner";
-          spanElement.textContent = `Game Over! ${winner} wins!`;
+          
+          if (winner === "Human") {
+            spanElement.textContent = `Game Over! ${winner} wins!`;
+            fireConfetti();
+          } else {
+            spanElement.textContent = `Game Over! ${winner} wins! 😢`;
+          }
         } else if (!gameState.computerMove) {
           spanElement.className = "current-player";
           spanElement.textContent = "Your turn";
@@ -382,6 +390,14 @@
           spanElement.className = "computer-thinking";
           spanElement.textContent = "Computer is thinking...";
         }
+      }
+
+      function fireConfetti() {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
       }
     </script>
   </body>

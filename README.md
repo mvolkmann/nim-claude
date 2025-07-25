@@ -79,3 +79,9 @@ Fix this."
 tests pilesWithOne contains two return statements.
 Replace this with a single return statement that uses the ternary operator
 to get the value of the count property being returned."
+
+"If the computer wins, display a large sad face emoji.
+If the human wins, fire a confetti cannon."
+
+"Your confetti implementation wasn't great. Use an
+existing library for that instead of implementing it yourself."
