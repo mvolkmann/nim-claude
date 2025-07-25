@@ -109,3 +109,5 @@ I followed the instructions from Claude Code which included the following:
 - I do not see a new application!
 - I started over using "Pages" instead of "Workers".
 - This worked! See https://nim-claude.pages.dev/.
+
+"Make the UI responsive so it looks good on phones."
