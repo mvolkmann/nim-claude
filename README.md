@@ -65,3 +65,8 @@ with a string value of "human" or "computer",
 use the gameState property "computerMove" with a Boolean value.'
 
 "Alphabetize the function definitions."
+
+"Currently the updateDisplay function blows away all the div elements inside
+itemsContainer and creates new ones from scratch every time it is called.
+This is inefficient. Instead just remove the items selected in the last move
+and update the remaining div elements as needed."

@@ -312,24 +312,49 @@
       function updateDisplay() {
         for (let i = 0; i < 3; i++) {
           const itemsContainer = elements.items[i];
-          itemsContainer.innerHTML = "";
+          const targetCount = gameState.columns[i];
+          const currentCount = itemsContainer.children.length;
 
-          for (let j = 0; j < gameState.columns[i]; j++) {
+          // Remove excess items from the end (these were clicked/removed).
+          while (itemsContainer.children.length > targetCount) {
+            itemsContainer.removeChild(itemsContainer.lastChild);
+          }
+
+          // Add missing items (shouldn't happen in normal gameplay but handles initialization).
+          for (let j = currentCount; j < targetCount; j++) {
             const item = document.createElement("div");
             item.className = "item";
             item.dataset.column = i;
             item.dataset.position = j;
+            itemsContainer.appendChild(item);
+          }
 
-            // Only add click handler for human player's turn.
-            if (!gameState.computerMove && !gameState.gameOver) {
-              item.addEventListener("click", handleItemClick);
-              item.classList.add("clickable");
+          // Update all remaining items' position data and interaction state.
+          for (let j = 0; j < targetCount; j++) {
+            const item = itemsContainer.children[j];
+            item.dataset.position = j;
+
+            // Update classes and styles based on current game state.
+            const isClickable = !gameState.computerMove && !gameState.gameOver;
+
+            if (isClickable) {
+              if (!item.classList.contains("clickable")) {
+                item.classList.add("clickable");
+                item.addEventListener("click", handleItemClick);
+              }
               item.style.cursor = "pointer";
             } else {
-              item.style.cursor = "default";
+              if (item.classList.contains("clickable")) {
+                item.classList.remove("clickable");
+                // Remove event listener by replacing with clone.
+                const newItem = item.cloneNode(true);
+                newItem.classList.remove("clickable");
+                newItem.style.cursor = "default";
+                item.parentNode.replaceChild(newItem, item);
+              } else {
+                item.style.cursor = "default";
+              }
             }
-
-            itemsContainer.appendChild(item);
           }
         }
 
