@@ -111,3 +111,11 @@ I followed the instructions from Claude Code which included the following:
 - This worked! See https://nim-claude.pages.dev/.
 
 "Make the UI responsive so it looks good on phones."
+
+"Add a Help button that displays game instructions in a popup when clicked."
+
+"In the mobile view, left justify the items
+just like they are in the desktop view."
+
+"The CSS rules are no longer alphabetized like they were before. Fix that.
+Also, alphabetize the CSS rules inside the media query."

@@ -14,6 +14,20 @@
         padding: 1.5rem;
       }
 
+      .close-btn {
+        background: none;
+        border: none;
+        color: #aaa;
+        cursor: pointer;
+        font-size: 2rem;
+        line-height: 1;
+        padding: 0;
+      }
+
+      .close-btn:hover {
+        color: #333;
+      }
+
       .column-controls {
         align-items: center;
         display: flex;
@@ -77,6 +91,29 @@
         text-align: center;
       }
 
+      .header {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+      }
+
+      .help-btn {
+        background-color: #6c757d;
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        font-size: 1.25rem;
+        font-weight: bold;
+        height: 2.5rem;
+        width: 2.5rem;
+      }
+
+      .help-btn:hover {
+        background-color: #5a6268;
+      }
+
       .item {
         background-color: #28a745;
         border: 0.125rem solid #155724;
@@ -110,6 +147,73 @@
         flex-wrap: wrap;
         gap: 0.5rem;
         margin: 1.5rem 0;
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+      }
+
+      .modal-body h3 {
+        color: #495057;
+        margin: 1.5rem 0 0.5rem 0;
+      }
+
+      .modal-body h3:first-child {
+        margin-top: 0;
+      }
+
+      .modal-body ol, .modal-body ul {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+      }
+
+      .modal-body p, .modal-body li {
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
+      }
+
+      .modal-body strong {
+        color: #333;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+        max-height: 80vh;
+        max-width: 32rem;
+        overflow-y: auto;
+        width: 90%;
+      }
+
+      .modal-header {
+        align-items: center;
+        border-bottom: 1px solid #dee2e6;
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 1.5rem;
+      }
+
+      .modal-header h2 {
+        color: #333;
+        margin: 0;
+      }
+
+      .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        height: 100vh;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        z-index: 1000;
+      }
+
+      .modal-overlay.show {
+        align-items: center;
+        display: flex;
+        justify-content: center;
       }
 
       .restart-btn {
@@ -156,31 +260,13 @@
       /* Mobile responsive styles */
       @media (max-width: 768px) {
         body {
-          padding: 1rem;
           max-width: 100%;
+          padding: 1rem;
         }
 
         .game-container {
-          padding: 1.5rem;
           margin: 0;
-        }
-
-        h1 {
-          font-size: 1.5rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .setup {
-          margin-bottom: 1.5rem;
-        }
-
-        .setup button {
-          font-size: 0.9rem;
-          padding: 0.75rem 1rem;
-          margin: 0.25rem;
-          display: block;
-          width: 100%;
-          max-width: 12rem;
+          padding: 1.5rem;
         }
 
         .game-status {
@@ -188,22 +274,61 @@
           margin: 1rem 0;
         }
 
+        h1 {
+          font-size: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .header {
+          margin-bottom: 1.5rem;
+        }
+
+        .help-btn {
+          font-size: 1rem;
+          height: 2.25rem;
+          width: 2.25rem;
+        }
+
         .item {
-          width: 2.5rem;
-          height: 2.5rem;
           border: 0.1875rem solid #155724;
+          height: 2.5rem;
+          width: 2.5rem;
         }
 
         .items {
           gap: 0.75rem;
           margin: 1rem 0;
-          justify-content: center;
+        }
+
+        .modal-body {
+          padding: 1rem;
+        }
+
+        .modal-content {
+          max-width: 90%;
+        }
+
+        .modal-header {
+          padding: 0.75rem 1rem;
         }
 
         .restart-btn {
           font-size: 0.9rem;
-          padding: 0.75rem 1.25rem;
           margin: 1.5rem auto;
+          padding: 0.75rem 1.25rem;
+        }
+
+        .setup {
+          margin-bottom: 1.5rem;
+        }
+
+        .setup button {
+          display: block;
+          font-size: 0.9rem;
+          margin: 0.25rem;
+          max-width: 12rem;
+          padding: 0.75rem 1rem;
+          width: 100%;
         }
 
         .winner {
@@ -217,24 +342,8 @@
         }
 
         .game-container {
-          padding: 1rem;
           border-radius: 0.25rem;
-        }
-
-        h1 {
-          font-size: 1.25rem;
-          margin-bottom: 1rem;
-        }
-
-        .setup p {
-          font-size: 0.9rem;
-          margin-bottom: 1rem;
-        }
-
-        .setup button {
-          font-size: 0.85rem;
-          padding: 0.65rem 0.85rem;
-          margin: 0.2rem;
+          padding: 1rem;
         }
 
         .game-status {
@@ -242,10 +351,25 @@
           margin: 0.75rem 0;
         }
 
+        h1 {
+          font-size: 1.25rem;
+          margin-bottom: 1rem;
+        }
+
+        .header {
+          margin-bottom: 1rem;
+        }
+
+        .help-btn {
+          font-size: 0.9rem;
+          height: 2rem;
+          width: 2rem;
+        }
+
         .item {
-          width: 2.25rem;
-          height: 2.25rem;
           border: 0.125rem solid #155724;
+          height: 2.25rem;
+          width: 2.25rem;
         }
 
         .items {
@@ -253,10 +377,42 @@
           margin: 0.75rem 0;
         }
 
+        .modal-body {
+          padding: 0.75rem;
+        }
+
+        .modal-body h3 {
+          font-size: 1rem;
+          margin: 1rem 0 0.5rem 0;
+        }
+
+        .modal-content {
+          max-width: 95%;
+        }
+
+        .modal-header {
+          padding: 0.5rem 0.75rem;
+        }
+
+        .modal-header h2 {
+          font-size: 1.25rem;
+        }
+
         .restart-btn {
           font-size: 0.85rem;
-          padding: 0.65rem 1rem;
           margin: 1rem auto;
+          padding: 0.65rem 1rem;
+        }
+
+        .setup button {
+          font-size: 0.85rem;
+          margin: 0.2rem;
+          padding: 0.65rem 0.85rem;
+        }
+
+        .setup p {
+          font-size: 0.9rem;
+          margin-bottom: 1rem;
         }
 
         .winner {
@@ -268,7 +424,10 @@
   </head>
   <body>
     <div class="game-container">
-      <h1>Nim Game</h1>
+      <div class="header">
+        <h1>Nim Game</h1>
+        <button class="help-btn" onclick="showHelp()">?</button>
+      </div>
 
       <div class="setup" id="setup">
         <p>Choose who goes first:</p>
@@ -284,6 +443,40 @@
         <div class="items" id="items1"></div>
         <div class="items" id="items2"></div>
         <button class="restart-btn" onclick="restartGame()">New Game</button>
+      </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal-overlay" id="helpModal" onclick="hideHelp()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <h2>How to Play Nim</h2>
+          <button class="close-btn" onclick="hideHelp()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h3>🎯 Objective</h3>
+          <p>The goal is to <strong>avoid taking the last item</strong>. The player who takes the last item loses!</p>
+          
+          <h3>🎮 How to Play</h3>
+          <ol>
+            <li>Choose who goes first: you or the computer</li>
+            <li>On your turn, click any green circle to remove that item and all items to its right in the same row</li>
+            <li>Players alternate turns</li>
+            <li>The player forced to take the last remaining item loses</li>
+          </ol>
+          
+          <h3>💡 Strategy Tips</h3>
+          <ul>
+            <li>Try to leave your opponent in a position where they must take the last item</li>
+            <li>Think ahead about what positions you're creating for your opponent</li>
+            <li>The computer uses optimal strategy - it will be challenging to beat!</li>
+          </ul>
+          
+          <h3>🕹️ Controls</h3>
+          <p><strong>Click any green circle</strong> to remove that item and all items to its right in the same row.</p>
+          
+          <p><em>Good luck and have fun! 🎉</em></p>
+        </div>
       </div>
     </div>
 
@@ -510,6 +703,21 @@
           origin: { y: 0.6 }
         });
       }
+
+      function showHelp() {
+        document.getElementById("helpModal").classList.add("show");
+      }
+
+      function hideHelp() {
+        document.getElementById("helpModal").classList.remove("show");
+      }
+
+      // Close modal with Escape key
+      document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+          hideHelp();
+        }
+      });
     </script>
   </body>
 </html>
