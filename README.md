@@ -85,3 +85,27 @@ If the human wins, fire a confetti cannon."
 
 "Your confetti implementation wasn't great. Use an
 existing library for that instead of implementing it yourself."
+
+"Deploy this as a web app to Cloudflare."
+
+This created the files worker.js and wrangler.toml for me.
+I followed the instructions from Claude Code which included the following:
+
+- Commit and push the new files.
+- Browse https://dash.cloudflare.com/.
+- Log in.
+- It said to "Navigate to Pages in the sidebar", but that doesn't exist.
+- It said to click "Create a project", but I only see "Create application",
+  so I clicked that.
+- It said to select "Connect to Git", but I only see "Import a repository".
+  I clicked the "Get Started" button for that.
+- I clicked the "GitHub" button which wasn't in the instructions.
+- I signed in to my GitHub account.
+- On the "Install Cloudflare Workers and Pages" page, I clicked my username.
+- I selected the "Only select repositories" radio button.
+- I selected my "nim-claude" repository.
+- I clicked the "Install & Authorize" button.
+- I clicked "Back to Compute (Workers) overview".
+- I do not see a new application!
+- I started over using "Pages" instead of "Workers".
+- This worked! See https://nim-claude.pages.dev/.
