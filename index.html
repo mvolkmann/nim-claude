@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nim Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        
+        .game-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .setup {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .setup button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .setup button:hover {
+            background-color: #0056b3;
+        }
+        
+        .game-board {
+            display: none;
+        }
+        
+        .column {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        
+        .column h3 {
+            margin: 0 0 10px 0;
+            color: #495057;
+        }
+        
+        .items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .item {
+            width: 30px;
+            height: 30px;
+            background-color: #28a745;
+            border: 2px solid #155724;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .item:hover {
+            background-color: #dc3545;
+            border-color: #721c24;
+        }
+        
+        .item.selected {
+            background-color: #ffc107;
+            border-color: #856404;
+        }
+        
+        .column-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .column-controls input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        
+        .column-controls button {
+            padding: 5px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .column-controls button:hover {
+            background-color: #c82333;
+        }
+        
+        .column-controls button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .game-status {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .current-player {
+            color: #007bff;
+        }
+        
+        .winner {
+            color: #28a745;
+            font-size: 24px;
+        }
+        
+        .computer-thinking {
+            color: #ffc107;
+        }
+        
+        .restart-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .restart-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Nim Game</h1>
+        
+        <div class="setup" id="setup">
+            <p>Choose who goes first:</p>
+            <button onclick="startGame('human')">Human First</button>
+            <button onclick="startGame('computer')">Computer First</button>
+        </div>
+        
+        <div class="game-board" id="gameBoard">
+            <div class="game-status" id="gameStatus">
+                <span class="current-player">Your turn</span>
+            </div>
+            
+            <div class="column" id="column0">
+                <h3>Column 1 (3 items)</h3>
+                <div class="items" id="items0"></div>
+                <div class="column-controls">
+                    <label>Remove: </label>
+                    <input type="number" id="input0" min="1" max="3" value="1">
+                    <button onclick="makeMove(0)" id="btn0">Remove Items</button>
+                </div>
+            </div>
+            
+            <div class="column" id="column1">
+                <h3>Column 2 (5 items)</h3>
+                <div class="items" id="items1"></div>
+                <div class="column-controls">
+                    <label>Remove: </label>
+                    <input type="number" id="input1" min="1" max="5" value="1">
+                    <button onclick="makeMove(1)" id="btn1">Remove Items</button>
+                </div>
+            </div>
+            
+            <div class="column" id="column2">
+                <h3>Column 3 (7 items)</h3>
+                <div class="items" id="items2"></div>
+                <div class="column-controls">
+                    <label>Remove: </label>
+                    <input type="number" id="input2" min="1" max="7" value="1">
+                    <button onclick="makeMove(2)" id="btn2">Remove Items</button>
+                </div>
+            </div>
+            
+            <button class="restart-btn" onclick="restartGame()">New Game</button>
+        </div>
+    </div>
+
+    <script>
+        let gameState = {
+            columns: [3, 5, 7],
+            currentPlayer: 'human',
+            gameOver: false,
+            humanFirst: true
+        };
+
+        function startGame(firstPlayer) {
+            gameState.humanFirst = (firstPlayer === 'human');
+            gameState.currentPlayer = firstPlayer;
+            gameState.gameOver = false;
+            gameState.columns = [3, 5, 7];
+            
+            document.getElementById('setup').style.display = 'none';
+            document.getElementById('gameBoard').style.display = 'block';
+            
+            updateDisplay();
+            
+            if (firstPlayer === 'computer') {
+                setTimeout(computerMove, 1000);
+            }
+        }
+
+        function updateDisplay() {
+            for (let i = 0; i < 3; i++) {
+                const itemsContainer = document.getElementById(`items${i}`);
+                itemsContainer.innerHTML = '';
+                
+                for (let j = 0; j < gameState.columns[i]; j++) {
+                    const item = document.createElement('div');
+                    item.className = 'item';
+                    itemsContainer.appendChild(item);
+                }
+                
+                const input = document.getElementById(`input${i}`);
+                const button = document.getElementById(`btn${i}`);
+                
+                if (gameState.columns[i] === 0) {
+                    input.disabled = true;
+                    button.disabled = true;
+                    input.max = 0;
+                } else {
+                    input.disabled = gameState.currentPlayer !== 'human' || gameState.gameOver;
+                    button.disabled = gameState.currentPlayer !== 'human' || gameState.gameOver;
+                    input.max = gameState.columns[i];
+                    if (input.value > gameState.columns[i]) {
+                        input.value = gameState.columns[i];
+                    }
+                }
+            }
+            
+            updateGameStatus();
+        }
+
+        function updateGameStatus() {
+            const statusElement = document.getElementById('gameStatus');
+            
+            if (gameState.gameOver) {
+                const winner = gameState.currentPlayer === 'human' ? 'Computer' : 'Human';
+                statusElement.innerHTML = `<span class="winner">Game Over! ${winner} wins!</span>`;
+            } else if (gameState.currentPlayer === 'human') {
+                statusElement.innerHTML = '<span class="current-player">Your turn</span>';
+            } else {
+                statusElement.innerHTML = '<span class="computer-thinking">Computer is thinking...</span>';
+            }
+        }
+
+        function makeMove(columnIndex) {
+            if (gameState.gameOver || gameState.currentPlayer !== 'human') return;
+            
+            const removeCount = parseInt(document.getElementById(`input${columnIndex}`).value);
+            
+            if (removeCount < 1 || removeCount > gameState.columns[columnIndex]) {
+                alert('Invalid move!');
+                return;
+            }
+            
+            gameState.columns[columnIndex] -= removeCount;
+            
+            if (checkGameOver()) {
+                gameState.gameOver = true;
+                updateDisplay();
+                return;
+            }
+            
+            gameState.currentPlayer = 'computer';
+            updateDisplay();
+            
+            setTimeout(computerMove, 1000);
+        }
+
+        function computerMove() {
+            if (gameState.gameOver) return;
+            
+            const move = calculateOptimalMove();
+            gameState.columns[move.column] -= move.count;
+            
+            if (checkGameOver()) {
+                gameState.gameOver = true;
+                updateDisplay();
+                return;
+            }
+            
+            gameState.currentPlayer = 'human';
+            updateDisplay();
+        }
+
+        function calculateOptimalMove() {
+            function nimSum(columns) {
+                return columns.reduce((sum, count) => sum ^ count, 0);
+            }
+            
+            const currentNimSum = nimSum(gameState.columns);
+            
+            // Special case: if only one pile has items > 1, take all but 1
+            const nonEmptyPiles = gameState.columns.filter(count => count > 0);
+            const pilesWithMultiple = gameState.columns.filter(count => count > 1);
+            
+            if (nonEmptyPiles.length > 1 && pilesWithMultiple.length === 1) {
+                // Find the pile with multiple items
+                for (let i = 0; i < 3; i++) {
+                    if (gameState.columns[i] > 1) {
+                        // Take all but 1 to leave an odd number of piles with 1 item
+                        return { column: i, count: gameState.columns[i] - 1 };
+                    }
+                }
+            }
+            
+            // Standard nim strategy: make nim-sum zero
+            if (currentNimSum !== 0) {
+                for (let column = 0; column < 3; column++) {
+                    if (gameState.columns[column] === 0) continue;
+                    
+                    // Calculate what this pile should be to make nim-sum zero
+                    const target = gameState.columns[column] ^ currentNimSum;
+                    
+                    // If target is less than current pile size, we can make this move
+                    if (target < gameState.columns[column]) {
+                        return { column, count: gameState.columns[column] - target };
+                    }
+                }
+            }
+            
+            // If nim-sum is already 0 or no optimal move exists, make a safe move
+            for (let i = 0; i < 3; i++) {
+                if (gameState.columns[i] > 0) {
+                    return { column: i, count: 1 };
+                }
+            }
+            
+            return { column: 0, count: 0 };
+        }
+
+        function checkGameOver() {
+            return gameState.columns.every(count => count === 0);
+        }
+
+        function restartGame() {
+            gameState = {
+                columns: [3, 5, 7],
+                currentPlayer: 'human',
+                gameOver: false,
+                humanFirst: true
+            };
+            
+            document.getElementById('setup').style.display = 'block';
+            document.getElementById('gameBoard').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
