@@ -74,3 +74,8 @@ and update the remaining div elements as needed."
 "When the remaining items are 0, 1, and 2, at it is the computers turn to move,
 it removes 1 item from the column containing 2 which allows the human to win.
 Fix this."
+
+"In the calculateOptimalMove function, the if statement that
+tests pilesWithOne contains two return statements.
+Replace this with a single return statement that uses the ternary operator
+to get the value of the count property being returned."

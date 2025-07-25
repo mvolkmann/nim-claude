@@ -216,11 +216,10 @@
             if (gameState.columns[i] > 1) {
               // If there's an odd number of piles with 1 item, take all from the multi-pile
               // If there's an even number of piles with 1 item, leave 1 in the multi-pile
-              if (pilesWithOne % 2 === 1) {
-                return { column: i, count: gameState.columns[i] };
-              } else {
-                return { column: i, count: gameState.columns[i] - 1 };
-              }
+              return { 
+                column: i, 
+                count: pilesWithOne % 2 === 1 ? gameState.columns[i] : gameState.columns[i] - 1 
+              };
             }
           }
         }
