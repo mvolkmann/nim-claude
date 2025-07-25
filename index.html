@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,35 +6,26 @@
     <title>Nim Game</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
         background-color: #f0f0f0;
-      }
-
-      .column {
-        margin: 20px 0;
-      }
-
-      .column h3 {
-        margin: 0 0 10px 0;
-        color: #495057;
+        font-family: Arial, sans-serif;
+        margin: 0 auto;
+        max-width: 50rem;
+        padding: 1.5rem;
       }
 
       .column-controls {
-        display: flex;
-        gap: 10px;
         align-items: center;
+        display: flex;
+        gap: 0.5rem;
       }
 
       .column-controls button {
-        padding: 5px 15px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
         background-color: #dc3545;
+        border: none;
+        border-radius: 0.5rem;
         color: white;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
       }
 
       .column-controls button:disabled {
@@ -47,10 +38,10 @@
       }
 
       .column-controls input {
-        width: 60px;
-        padding: 5px;
-        border: 1px solid #ddd;
-        border-radius: 3px;
+        border: 0.125rem solid #ddd;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        width: 4rem;
       }
 
       .computer-thinking {
@@ -67,32 +58,32 @@
 
       .game-container {
         background: white;
-        border-radius: 10px;
-        padding: 30px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        padding: 2rem;
       }
 
       .game-status {
-        text-align: center;
-        margin: 20px 0;
-        font-size: 18px;
+        font-size: 1.5rem;
         font-weight: bold;
+        margin: 1.5rem 0;
+        text-align: center;
       }
 
       h1 {
-        text-align: center;
         color: #333;
-        margin-bottom: 30px;
+        margin-bottom: 2rem;
+        text-align: center;
       }
 
       .item {
-        width: 30px;
-        height: 30px;
         background-color: #28a745;
-        border: 2px solid #155724;
+        border: 0.125rem solid #155724;
         border-radius: 50%;
         cursor: pointer;
+        height: 2rem;
         transition: all 0.2s;
+        width: 2rem;
       }
 
       .item:hover {
@@ -100,12 +91,12 @@
         border-color: #721c24;
         transform: scale(1.1);
       }
-      
+
       .item.clickable:hover {
         background-color: #dc3545;
         border-color: #721c24;
+        box-shadow: 0 0.125rem 0.5rem rgba(220, 53, 69, 0.3);
         transform: scale(1.1);
-        box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
       }
 
       .item.selected {
@@ -116,20 +107,20 @@
       .items {
         display: flex;
         flex-wrap: wrap;
-        gap: 5px;
-        margin-bottom: 10px;
+        gap: 0.5rem;
+        margin: 1.5rem 0;
       }
 
       .restart-btn {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
         background-color: #28a745;
+        border: none;
+        border-radius: 0.5rem;
         color: white;
+        cursor: pointer;
+        display: block;
+        font-size: 1rem;
+        margin: 1.5rem auto;
+        padding: 0.5rem 1.5rem;
       }
 
       .restart-btn:hover {
@@ -137,19 +128,19 @@
       }
 
       .setup {
+        margin-bottom: 2rem;
         text-align: center;
-        margin-bottom: 30px;
       }
 
       .setup button {
-        font-size: 16px;
-        padding: 10px 20px;
-        margin: 0 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
         background-color: #007bff;
+        border: none;
+        border-radius: 0.5rem;
         color: white;
+        cursor: pointer;
+        font-size: 1rem;
+        margin: 0 0.5rem;
+        padding: 0.5rem 1.5rem;
       }
 
       .setup button:hover {
@@ -158,7 +149,7 @@
 
       .winner {
         color: #28a745;
-        font-size: 24px;
+        font-size: 1.5rem;
       }
     </style>
   </head>
@@ -176,19 +167,9 @@
         <div class="game-status" id="gameStatus">
           <span class="current-player">Your turn</span>
         </div>
-
-        <div class="column" id="column0">
-          <div class="items" id="items0"></div>
-        </div>
-
-        <div class="column" id="column1">
-          <div class="items" id="items1"></div>
-        </div>
-
-        <div class="column" id="column2">
-          <div class="items" id="items2"></div>
-        </div>
-
+        <div class="items" id="items0"></div>
+        <div class="items" id="items1"></div>
+        <div class="items" id="items2"></div>
         <button class="restart-btn" onclick="restartGame()">New Game</button>
       </div>
     </div>
@@ -196,12 +177,11 @@
     <script>
       let gameState = {
         columns: [3, 5, 7],
-        currentPlayer: "human",
+        computerMove: false,
         gameOver: false,
-        humanFirst: true,
       };
 
-      // Cache DOM elements
+      // Cache DOM elements.
       const elements = {
         setup: document.getElementById("setup"),
         gameBoard: document.getElementById("gameBoard"),
@@ -210,13 +190,112 @@
         items: [
           document.getElementById("items0"),
           document.getElementById("items1"),
-          document.getElementById("items2")
-        ]
+          document.getElementById("items2"),
+        ],
       };
 
+      function calculateOptimalMove() {
+        function nimSum(columns) {
+          return columns.reduce((sum, count) => sum ^ count, 0);
+        }
+
+        const currentNimSum = nimSum(gameState.columns);
+
+        // Special case: if only one pile has items > 1, take all but 1.
+        const nonEmptyPiles = gameState.columns.filter((count) => count > 0);
+        const pilesWithMultiple = gameState.columns.filter(
+          (count) => count > 1
+        );
+
+        if (nonEmptyPiles.length > 1 && pilesWithMultiple.length === 1) {
+          // Find the pile with multiple items.
+          for (let i = 0; i < 3; i++) {
+            if (gameState.columns[i] > 1) {
+              // Take all but 1 to leave an odd number of piles with 1 item.
+              return { column: i, count: gameState.columns[i] - 1 };
+            }
+          }
+        }
+
+        // Standard nim strategy: make nim-sum zero.
+        if (currentNimSum !== 0) {
+          for (let column = 0; column < 3; column++) {
+            if (gameState.columns[column] === 0) continue;
+
+            // Calculate what this pile should be to make nim-sum zero.
+            const target = gameState.columns[column] ^ currentNimSum;
+
+            // If target is less than current pile size, we can make this move.
+            if (target < gameState.columns[column]) {
+              return { column, count: gameState.columns[column] - target };
+            }
+          }
+        }
+
+        // If nim-sum is already 0 or no optimal move exists, make a safe move.
+        for (let i = 0; i < 3; i++) {
+          if (gameState.columns[i] > 0) {
+            return { column: i, count: 1 };
+          }
+        }
+
+        return { column: 0, count: 0 };
+      }
+
+      function checkGameOver() {
+        return gameState.columns.every((count) => count === 0);
+      }
+
+      function computerMove() {
+        if (gameState.gameOver) return;
+
+        const move = calculateOptimalMove();
+        gameState.columns[move.column] -= move.count;
+
+        if (checkGameOver()) {
+          gameState.gameOver = true;
+          updateDisplay();
+          return;
+        }
+
+        gameState.computerMove = false;
+        updateDisplay();
+      }
+
+      function handleItemClick(event) {
+        if (gameState.gameOver || gameState.computerMove) return;
+
+        const columnIndex = parseInt(event.target.dataset.column);
+        const position = parseInt(event.target.dataset.position);
+
+        // Remove clicked item and all items to its right.
+        const removeCount = gameState.columns[columnIndex] - position;
+        gameState.columns[columnIndex] = position;
+
+        if (checkGameOver()) {
+          gameState.gameOver = true;
+          updateDisplay();
+          return;
+        }
+
+        gameState.computerMove = true;
+        updateDisplay();
+        setTimeout(computerMove, 1000);
+      }
+
+      function restartGame() {
+        gameState = {
+          columns: [3, 5, 7],
+          computerMove: false,
+          gameOver: false,
+        };
+
+        elements.setup.style.display = "block";
+        elements.gameBoard.style.display = "none";
+      }
+
       function startGame(firstPlayer) {
-        gameState.humanFirst = firstPlayer === "human";
-        gameState.currentPlayer = firstPlayer;
+        gameState.computerMove = firstPlayer === "computer";
         gameState.gameOver = false;
         gameState.columns = [3, 5, 7];
 
@@ -240,16 +319,16 @@
             item.className = "item";
             item.dataset.column = i;
             item.dataset.position = j;
-            
-            // Only add click handler for human player's turn
-            if (gameState.currentPlayer === "human" && !gameState.gameOver) {
+
+            // Only add click handler for human player's turn.
+            if (!gameState.computerMove && !gameState.gameOver) {
               item.addEventListener("click", handleItemClick);
               item.classList.add("clickable");
               item.style.cursor = "pointer";
             } else {
               item.style.cursor = "default";
             }
-            
+
             itemsContainer.appendChild(item);
           }
         }
@@ -261,119 +340,16 @@
         const spanElement = elements.statusSpan;
 
         if (gameState.gameOver) {
-          const winner =
-            gameState.currentPlayer === "human" ? "Computer" : "Human";
+          const winner = gameState.computerMove ? "Human" : "Computer";
           spanElement.className = "winner";
           spanElement.textContent = `Game Over! ${winner} wins!`;
-        } else if (gameState.currentPlayer === "human") {
+        } else if (!gameState.computerMove) {
           spanElement.className = "current-player";
           spanElement.textContent = "Your turn";
         } else {
           spanElement.className = "computer-thinking";
           spanElement.textContent = "Computer is thinking...";
         }
-      }
-
-      function handleItemClick(event) {
-        if (gameState.gameOver || gameState.currentPlayer !== "human") return;
-
-        const columnIndex = parseInt(event.target.dataset.column);
-        const position = parseInt(event.target.dataset.position);
-        
-        // Remove clicked item and all items to its right
-        const removeCount = gameState.columns[columnIndex] - position;
-        gameState.columns[columnIndex] = position;
-
-        if (checkGameOver()) {
-          gameState.gameOver = true;
-          updateDisplay();
-          return;
-        }
-
-        gameState.currentPlayer = "computer";
-        updateDisplay();
-
-        setTimeout(computerMove, 1000);
-      }
-
-      function computerMove() {
-        if (gameState.gameOver) return;
-
-        const move = calculateOptimalMove();
-        gameState.columns[move.column] -= move.count;
-
-        if (checkGameOver()) {
-          gameState.gameOver = true;
-          updateDisplay();
-          return;
-        }
-
-        gameState.currentPlayer = "human";
-        updateDisplay();
-      }
-
-      function calculateOptimalMove() {
-        function nimSum(columns) {
-          return columns.reduce((sum, count) => sum ^ count, 0);
-        }
-
-        const currentNimSum = nimSum(gameState.columns);
-
-        // Special case: if only one pile has items > 1, take all but 1
-        const nonEmptyPiles = gameState.columns.filter((count) => count > 0);
-        const pilesWithMultiple = gameState.columns.filter(
-          (count) => count > 1,
-        );
-
-        if (nonEmptyPiles.length > 1 && pilesWithMultiple.length === 1) {
-          // Find the pile with multiple items
-          for (let i = 0; i < 3; i++) {
-            if (gameState.columns[i] > 1) {
-              // Take all but 1 to leave an odd number of piles with 1 item
-              return { column: i, count: gameState.columns[i] - 1 };
-            }
-          }
-        }
-
-        // Standard nim strategy: make nim-sum zero
-        if (currentNimSum !== 0) {
-          for (let column = 0; column < 3; column++) {
-            if (gameState.columns[column] === 0) continue;
-
-            // Calculate what this pile should be to make nim-sum zero
-            const target = gameState.columns[column] ^ currentNimSum;
-
-            // If target is less than current pile size, we can make this move
-            if (target < gameState.columns[column]) {
-              return { column, count: gameState.columns[column] - target };
-            }
-          }
-        }
-
-        // If nim-sum is already 0 or no optimal move exists, make a safe move
-        for (let i = 0; i < 3; i++) {
-          if (gameState.columns[i] > 0) {
-            return { column: i, count: 1 };
-          }
-        }
-
-        return { column: 0, count: 0 };
-      }
-
-      function checkGameOver() {
-        return gameState.columns.every((count) => count === 0);
-      }
-
-      function restartGame() {
-        gameState = {
-          columns: [3, 5, 7],
-          currentPlayer: "human",
-          gameOver: false,
-          humanFirst: true,
-        };
-
-        elements.setup.style.display = "block";
-        elements.gameBoard.style.display = "none";
       }
     </script>
   </body>

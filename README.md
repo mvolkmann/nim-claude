@@ -47,3 +47,21 @@ update the class attribute and textContent of the existing span element."
 repeatedly to find elements that need to be updated.
 Change this to find all those elements at the beginning and
 save them in variables so the search for them is only performed once."
+
+"It seems that the gameState property humanFirst is set, but never used.
+If that property isn't needed, remove it."
+
+"In the CSS properties, prefer rem units over px units.
+Use values that are multiples of 0.5."
+
+"Alphabetize the properties within each CSS rule."
+
+"It seems that the div elements with class="column" are not needed
+because the div elements with class="items" hold all the items.
+Remove the unnecessary div elements."
+
+'Instead of using the gameState property "currentPlayer"
+with a string value of "human" or "computer",
+use the gameState property "computerMove" with a Boolean value.'
+
+"Alphabetize the function definitions."
