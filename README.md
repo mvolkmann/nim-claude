@@ -70,3 +70,7 @@ use the gameState property "computerMove" with a Boolean value.'
 itemsContainer and creates new ones from scratch every time it is called.
 This is inefficient. Instead just remove the items selected in the last move
 and update the remaining div elements as needed."
+
+"When the remaining items are 0, 1, and 2, at it is the computers turn to move,
+it removes 1 item from the column containing 2 which allows the human to win.
+Fix this."

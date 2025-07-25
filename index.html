@@ -201,18 +201,26 @@
 
         const currentNimSum = nimSum(gameState.columns);
 
-        // Special case: if only one pile has items > 1, take all but 1.
+        // Endgame strategy: when only one pile has multiple items
         const nonEmptyPiles = gameState.columns.filter((count) => count > 0);
         const pilesWithMultiple = gameState.columns.filter(
           (count) => count > 1
         );
 
         if (nonEmptyPiles.length > 1 && pilesWithMultiple.length === 1) {
-          // Find the pile with multiple items.
+          // Count piles with exactly 1 item
+          const pilesWithOne = nonEmptyPiles.filter((count) => count === 1).length;
+          
+          // Find the pile with multiple items
           for (let i = 0; i < 3; i++) {
             if (gameState.columns[i] > 1) {
-              // Take all but 1 to leave an odd number of piles with 1 item.
-              return { column: i, count: gameState.columns[i] - 1 };
+              // If there's an odd number of piles with 1 item, take all from the multi-pile
+              // If there's an even number of piles with 1 item, leave 1 in the multi-pile
+              if (pilesWithOne % 2 === 1) {
+                return { column: i, count: gameState.columns[i] };
+              } else {
+                return { column: i, count: gameState.columns[i] - 1 };
+              }
             }
           }
         }
