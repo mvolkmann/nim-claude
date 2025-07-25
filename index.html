@@ -201,14 +201,27 @@
         humanFirst: true,
       };
 
+      // Cache DOM elements
+      const elements = {
+        setup: document.getElementById("setup"),
+        gameBoard: document.getElementById("gameBoard"),
+        gameStatus: document.getElementById("gameStatus"),
+        statusSpan: document.getElementById("gameStatus").querySelector("span"),
+        items: [
+          document.getElementById("items0"),
+          document.getElementById("items1"),
+          document.getElementById("items2")
+        ]
+      };
+
       function startGame(firstPlayer) {
         gameState.humanFirst = firstPlayer === "human";
         gameState.currentPlayer = firstPlayer;
         gameState.gameOver = false;
         gameState.columns = [3, 5, 7];
 
-        document.getElementById("setup").style.display = "none";
-        document.getElementById("gameBoard").style.display = "block";
+        elements.setup.style.display = "none";
+        elements.gameBoard.style.display = "block";
 
         updateDisplay();
 
@@ -219,7 +232,7 @@
 
       function updateDisplay() {
         for (let i = 0; i < 3; i++) {
-          const itemsContainer = document.getElementById(`items${i}`);
+          const itemsContainer = elements.items[i];
           itemsContainer.innerHTML = "";
 
           for (let j = 0; j < gameState.columns[i]; j++) {
@@ -245,8 +258,7 @@
       }
 
       function updateGameStatus() {
-        const statusElement = document.getElementById("gameStatus");
-        const spanElement = statusElement.querySelector("span");
+        const spanElement = elements.statusSpan;
 
         if (gameState.gameOver) {
           const winner =
@@ -360,8 +372,8 @@
           humanFirst: true,
         };
 
-        document.getElementById("setup").style.display = "block";
-        document.getElementById("gameBoard").style.display = "none";
+        elements.setup.style.display = "block";
+        elements.gameBoard.style.display = "none";
       }
     </script>
   </body>

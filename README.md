@@ -38,3 +38,12 @@ column numbers and the number of items remaining. Instead,
 just show the green circles remaining in each column."
 
 "Remove the gray panels around each column of green circles."
+
+"In the updateGameStatus function, instead of creating a new span element
+by setting the innerHTML of the parent element,
+update the class attribute and textContent of the existing span element."
+
+"Currently the code uses the methods getElementById and querySelector
+repeatedly to find elements that need to be updated.
+Change this to find all those elements at the beginning and
+save them in variables so the search for them is only performed once."
