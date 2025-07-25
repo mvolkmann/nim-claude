@@ -246,17 +246,19 @@
 
       function updateGameStatus() {
         const statusElement = document.getElementById("gameStatus");
+        const spanElement = statusElement.querySelector("span");
 
         if (gameState.gameOver) {
           const winner =
             gameState.currentPlayer === "human" ? "Computer" : "Human";
-          statusElement.innerHTML = `<span class="winner">Game Over! ${winner} wins!</span>`;
+          spanElement.className = "winner";
+          spanElement.textContent = `Game Over! ${winner} wins!`;
         } else if (gameState.currentPlayer === "human") {
-          statusElement.innerHTML =
-            '<span class="current-player">Your turn</span>';
+          spanElement.className = "current-player";
+          spanElement.textContent = "Your turn";
         } else {
-          statusElement.innerHTML =
-            '<span class="computer-thinking">Computer is thinking...</span>';
+          spanElement.className = "computer-thinking";
+          spanElement.textContent = "Computer is thinking...";
         }
       }
 
